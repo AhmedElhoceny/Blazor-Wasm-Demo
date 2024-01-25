@@ -1,0 +1,25 @@
+﻿@page "/Test/AddTestEntity"
+@using Domain.Models
+@using Services.Services.Imps
+@using Services.Services.Interfaces
+@inject HttpClient Http
+
+<h3>AddTestEntity</h3>
+
+@* add Test Entity  *@
+<div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" placeholder="Enter Name" @bind="testEntity.Name">
+</div>
+
+@* Submit Button  *@
+<button type="submit" class="btn btn-primary" @onclick="AddTestEntityItem">Submit</button>
+
+@code{
+public TestEntity testEntity { get; set; } = new TestEntity();
+
+private async Task AddTestEntityItem()
+    {
+        await Http.PostAsJsonAsync("api/TestEntity", testEntity);
+    }
+}

@@ -1,0 +1,46 @@
+﻿@page "/Test/TestEntityMain"
+@using Domain.Models
+@using Services.Services.Imps
+@using Services.Services.Interfaces
+@inject HttpClient Http
+
+<h3>TestEntityMain</h3>
+
+<p>
+    This component demonstrates fetching data from the server.
+</p>
+
+@if (dataList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var testEntity in dataList)
+            {
+                <tr>
+                    <td>@testEntity.Id</td>
+                    <td>@testEntity.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    public List<TestEntity> dataList { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        dataList = await Http.GetFromJsonAsync<List<TestEntity>>("api/TestEntity");
+    }
+}
